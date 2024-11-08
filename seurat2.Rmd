@@ -1,15 +1,9 @@
 #Starting
-
-```{r}
+# Library used
 library(Seurat)
 library(tidyverse) 
-
 getwd() 
-```
-
 #Read count DISEASED
-
-```{r}
 PDAC_I<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/SRR21491966/filtered_feature_bc_matrix")
 PDAC_II<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/SRR21491967/filtered_feature_bc_matrix")
 PDAC_III<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/SRR21491972/filtered_feature_bc_matrix")
@@ -20,12 +14,9 @@ PDAC_VII<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_proj
 PDAC_VIII<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/SRR21491984/filtered_feature_bc_matrix")
 PDAC_IX<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/SRR21491986/filtered_feature_bc_matrix")
 PDAC_X<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/SRR21491987/filtered_feature_bc_matrix")
-#
-```
 
 #Read count NORMAL
 
-```{r}
 NOR_I<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/adac/SRR21491988/outs/filtered_feature_bc_matrix")
 NOR_II<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/adac/SRR21492001/outs/filtered_feature_bc_matrix")
 NOR_III<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/adac/SRR21492003/outs/filtered_feature_bc_matrix")
@@ -36,13 +27,9 @@ NOR_VII<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_proje
 NOR_VIII<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/adac/SRR21492008/outs/filtered_feature_bc_matrix")
 NOR_IX<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/adac/SRR21492014/outs/filtered_feature_bc_matrix")
 NOR_X<-Read10X(data.dir = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/adac/SRR21492015/outs/filtered_feature_bc_matrix")
-```
 
 #library for creating Seurat object
-
 # creating seurat object
-
-```{r}
 PDAC_I<-CreateSeuratObject(counts = PDAC_I,project = "PDAC", min.cells = 3, min.features = 200)
 PDAC_I
 PDAC_II<-CreateSeuratObject(counts = PDAC_II,project = "PDAC", min.cells = 3, min.features = 200)
@@ -64,11 +51,8 @@ PDAC_IX
 PDAC_X<-CreateSeuratObject(counts = PDAC_X,project = "PDAC", min.cells = 3, min.features = 200)
 PDAC_X
 
-```
-
 # CREATE SEURAT OBJECT NORMAL
 
-```{r}
 NOR_I<-CreateSeuratObject(counts = NOR_I,project = "NOR", min.cells = 3, min.features = 200)
 NOR_I
 NOR_II<-CreateSeuratObject(counts = NOR_II,project = "NOR", min.cells = 3, min.features = 200)
@@ -89,11 +73,9 @@ NOR_IX<-CreateSeuratObject(counts = NOR_IX,project = "NOR", min.cells = 3, min.f
 NOR_IX
 NOR_X<-CreateSeuratObject(counts = NOR_X,project = "NOR", min.cells = 3, min.features = 200)
 NOR_X
-```
 
 # to check AND view seurat objects
 
-```{r}
 class(PDAC_I)
 
 colnames(PDAC_I[])
@@ -101,11 +83,8 @@ rownames(PDAC_I[])
 #View(PDAC_I)
 #PDAC_I#
 View(PDAC_I@meta.data)
-```
 
-# Save Seurat object
-
-```{r RDS}
+# Save Seurat object in RDS form
 saveRDS(PDAC_I,file = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_I.RDS")
 saveRDS(PDAC_II,file = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_II.RDS")
 saveRDS(PDAC_III,file = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_III.RDS")
@@ -129,8 +108,8 @@ saveRDS(NOR_IX,file ="C:/Users/Farha Tarique/Documents/GitHub/minor_project/adac
 saveRDS(NOR_X,file ="C:/Users/Farha Tarique/Documents/GitHub/minor_project/adac/NOR_X.RDS")
 ```
 
-# QUALITY CONTROL
-```{r}
+# QUALITY CONTROL (qc prameters should use according to the datasets taken.)
+# 
 # Loading PDAC datasets
 PDAC_I <- readRDS("C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_I.RDS")
 PDAC_II <- readRDS("C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_II.RDS")
@@ -143,12 +122,8 @@ PDAC_VIII <- readRDS("C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac
 PDAC_IX <- readRDS("C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_IX.RDS")
 PDAC_X <- readRDS("C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_X.RDS")
 
-```
-
-
 # calculate mitochondrial gene %
 
-```{r}
 # FOR DISEASED CONDITION SAMPLES
 PDAC_I<- PercentageFeatureSet(PDAC_I, pattern = "^MT-",col.name = "percent.mt")
 PDAC_II<- PercentageFeatureSet(PDAC_II, pattern = "^MT-",col.name = "percent.mt")
@@ -174,15 +149,14 @@ NOR_X<- PercentageFeatureSet(NOR_X, pattern = "^MT-",col.name = "percent.mt")
 ## TO CHECK 
 View(PDAC_I@meta.data)
 # Plot the mitochondrial percentage using a violin plot 
-### these are representing the QC matrix
+### to plot  the QC changes
 VlnPlot(PDAC_I, features = "percent.mt")
 VlnPlot(PDAC_I, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3)
 # Scatter plot of nCount_RNA vs nFeature_RNA
 FeatureScatter(PDAC_I, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") + geom_smooth(method = 'lm')
-```
 
 # To see QC matrix before filteration and filtering
-```{r}
+
 #View(PDAC_I$meta.data)
 counts_data <- GetAssayData(PDAC_I, assay = "RNA", slot = "counts")
 head(counts_data)
@@ -445,11 +419,7 @@ VlnPlot(NOR_X, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3)
 # 
 PDAC_I
 View(PDAC_II$meta.data)
-
-```
-
-
-```{r}
+############
 #PDAC_I
 # Load data and estimate soup profile
 #all <-c('PDAC_I','PDAC_II','PDAC_III','PDAC_IV','PDAC_V','PDAC_VI','PDAC_VII','PDAC_VIII','PDAC_IX','PDAC_X','NOR_I','NOR_II','NOR_III','NOR_IV','NOR_V','NOR_VI','NOR_VII','NOR_VIII','NOR_IX','NOR_X')
@@ -465,11 +435,8 @@ head(PDAC_I@meta.data)
 # Access assays in your Seurat object
 available_assays <- assays(PDAC_I)
 print(available_assays)  # This should show you the assays present in the object
-```
 
 ## 
-
-```{r}
 
 ALL.list <- list(
   PDAC_I = PDAC_I,
@@ -501,12 +468,11 @@ ALL.list <- readRDS("ALL_list_seurat_objects.rds")
 
 ALL.list <- DimPlot(ALL.list, reduction = "umap", label = TRUE)
 #rm()
-```
+
 
 # NORMALIZATION OK CODE
 
 
-```{r}
 library(Seurat)
 library(dplyr)
 #
@@ -523,6 +489,7 @@ processed_samples <- lapply(processed_samples, function(sample) {
     RunUMAP(dims = 1:30)
 })
 ###################
+# for plotting
 if (!requireNamespace("DiagrammeR", quietly = TRUE)) {
   install.packages("DiagrammeR")
 }
@@ -583,11 +550,6 @@ print(dim_plot_combined)
 # Optionally, save the combined plot
 ggsave(filename = "combined_dim_plot.png", plot = dim_plot_combined, width = 15, height = 5)
 
-
-
-
-
-
 ####################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 # Merging all samples into one Seurat object
 library(Seurat)
@@ -634,22 +596,12 @@ View(processed_samples@meta.data)
     # Assuming 'counts' is a matrix in your list named 'processed_samples'
 
 
-```
-
-
-
-
-```{r}
 # Save the list of Seurat objects as an RDS file
 saveRDS(ALL.list, file = "ALL_list_seurat_objects.rds")
 # Load the list of Seurat objects from the RDS file
 ALL.list <- readRDS("ALL_list_seurat_objects.rds")
 
-```
 
-
-
-```{r}
 ## Doublet detection 
 # If not installed, use BiocManager to install scdbl
 #if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -743,10 +695,7 @@ saveRDS(ALL.list, file = "ALL_list_seurat_objects.rds")
 # Load the list of Seurat objects from the RDS file
 ALL.list <- readRDS("ALL_list_seurat_objects.rds")
 
-```
-
-
-```{r}
+###
 #Load data and estimate soup profile
 #Loop through each sample in the ALL.list to run SoupX
 # Load necessary libraries
@@ -1060,14 +1009,6 @@ saveRDS(ALL.combined2, file = "ALL_combined_seurat_object.rds")
 library(Seurat)
 
 
-
-
-```
-
-
-
-
-```{r}
 ALL.combined2 <- readRDS("ALL_combined_seurat_object.rds")
 
 
@@ -1118,9 +1059,7 @@ ALL.combined2 <- readRDS("ALL_combined_seurat_object2.rds")
 library(dplyr)
 library(Seurat)
 DimPlot(ALL.combined2,reduction = 'umap',label = T)
-```
 
-```{r}
 ALL.combined2 <- readRDS("ALL_combined_seurat_object2.rds")
 # find marker to find deg
 install.packages("ggplot2")
@@ -1209,26 +1148,13 @@ go_results <- enrichGO(gene = key_genes_vector, OrgDb = org.Hs.eg.db,
 # View GO results
 print(head(go_results))
 
-
 #############################^^^^^^^^^^^^^^^^^^^^^^
-
-```
-
-
-
-
-
-
-
-```{r}
 
 ALL.combined2 <- readRDS("ALL_combined_seurat_object2.rds")
 ########################################################################################
 
-```
-
 # Analyse NOR and PDACseparately
-```{r}
+
 # Assuming your object is called ALL.combined
 ALL.list <- SplitObject(ALL.combined2, split.by = "orig.ident")
 NOR_ALL <- ALL.list[["NOR"]]
@@ -1249,9 +1175,7 @@ PDAC_ALL
 dim(ALL.combined2)
 dim(NOR_ALL)
 dim(PDAC_ALL)
-```
-
-```{r}
+#########
 library(SingleR)
 library(SingleR)
 library(SingleCellExperiment)  # if you're using SingleCellExperiment objects
@@ -1278,10 +1202,7 @@ table(Idents(NOR_ALL))
 
 head(ALL.combined2@meta.data)
 Idents(ALL.combined2) <- ALL.combined2@meta.data$orig.ident
-
-```
-
-```{r}
+####
 # Add SingleR labels to the metadata of NOR_ALL
 
 ALL.combined$SingleRlabels <- pred_nor$labels[match(rownames(NOR_ALL@meta.data), rownames(pred_nor))]
@@ -1304,26 +1225,4 @@ DimPlot(NOR_ALL, reduction = 'umap', group.by = 'SingleRlabels',label = FALSE)
 DimPlot(PDAC_ALL, reduction = 'umap',group.by = 'SingleRlabels',label = FALSE)
 DimPlot(ALL.combined2, reduction = "umap", label = TRUE)
 
-```
-
 # Perform differential expression analysis for each cluster
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-```
-
-
