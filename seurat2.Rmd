@@ -468,10 +468,7 @@ ALL.list <- readRDS("ALL_list_seurat_objects.rds")
 
 ALL.list <- DimPlot(ALL.list, reduction = "umap", label = TRUE)
 #rm()
-
-
 # NORMALIZATION OK CODE
-
 
 library(Seurat)
 library(dplyr)
@@ -516,9 +513,6 @@ for (i in seq_along(processed_samples)) {
 }
 
 #VlnPlot(processed_samples, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3)
-
-
-#
 library(ggplot2)  # Ensure ggplot2 is loaded for plotting
 
 ###########################################################################
@@ -934,15 +928,9 @@ data_list <- mapply(make_soup, sobj = data_list, sample_id = samples, SIMPLIFY =
 # After soupx 
 saveRDS(processed_samples, file = "ALL_data_processed_main.RDS")
 
-
-```
 # finding variable features
-```{r}
-
-```
 
 # Integration of datasets 
-```{r}
 
 #ALL.list
 processed_samples <- readRDS("processed_samples.rds")
@@ -954,7 +942,6 @@ library(Seurat)
 
 Features <- SelectIntegrationFeatures(object.list = processed_samples)
 All.anchors <- FindIntegrationAnchors(object.list = processed_samples,anchor.features = Features)
-
 
 # Assuming `processed_list` is a list of Seurat objects
 processed_samples <- lapply(processed_samples, function(obj) {
@@ -1005,12 +992,10 @@ saveRDS(ALL.combined2, file = "ALL_combined_seurat_object.rds")
 
 ######################################################################################################################################
 #################################################################################################
+# For cell annotation
 # Ensure Seurat package is loaded
 library(Seurat)
-
-
 ALL.combined2 <- readRDS("ALL_combined_seurat_object.rds")
-
 
 library(SingleR)
 library(SingleCellExperiment)  # if you're using SingleCellExperiment objects
