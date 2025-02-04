@@ -706,26 +706,26 @@ library(SingleCellExperiment)
 
 # Define the paths to the raw data for each PDAC sample
 sample_paths <- list(
-  PDAC_I = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_I/raw_feature_bc_matrix/",
-  PDAC_II = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_II/raw_feature_bc_matrix/",
-  PDAC_III = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_III/raw_feature_bc_matrix/",
-  PDAC_IV = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_IV/raw_feature_bc_matrix/",
-  PDAC_V = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_V/raw_feature_bc_matrix/",
-  PDAC_VI = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_VI/raw_feature_bc_matrix/",
-  PDAC_VII = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_VII/raw_feature_bc_matrix/",
-  PDAC_VIII = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_VIII/raw_feature_bc_matrix/",
-  PDAC_IX = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_IX/raw_feature_bc_matrix/",
-  PDAC_X = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/PDAC_X/raw_feature_bc_matrix/",
-    NOR_I = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/NOR_I/raw_feature_bc_matrix/",
-      NOR_II = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/NOR_II/raw_feature_bc_matrix/",
-    NOR_III = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/NOR_III/raw_feature_bc_matrix/",
-    NOR_IV = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/NOR_IV/raw_feature_bc_matrix/",
-    NOR_V = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/NOR_V/raw_feature_bc_matrix/",
-      NOR_VI = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/NOR_VI/raw_feature_bc_matrix/",
-    NOR_VII = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/NOR_VII/raw_feature_bc_matrix/",
-      NOR_VIII = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/NOR_VIII/raw_feature_bc_matrix/",
-    NOR_IX = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/NOR_IX/raw_feature_bc_matrix/",
-      NOR_X = "C:/Users/Farha Tarique/Documents/GitHub/minor_project/pdac/NOR_X/raw_feature_bc_matrix/")
+  PDAC_I = "raw_feature_bc_matrix/",
+  PDAC_II = "raw_feature_bc_matrix/",
+  PDAC_III = "raw_feature_bc_matrix/",
+  PDAC_IV = "raw_feature_bc_matrix/",
+  PDAC_V = "raw_feature_bc_matrix/",
+  PDAC_VI = "raw_feature_bc_matrix/",
+  PDAC_VII = "raw_feature_bc_matrix/",
+  PDAC_VIII = "raw_feature_bc_matrix/",
+  PDAC_IX = "raw_feature_bc_matrix/",
+  PDAC_X = "raw_feature_bc_matrix/",
+    NOR_I = "raw_feature_bc_matrix/",
+      NOR_II = "raw_feature_bc_matrix/",
+    NOR_III = "raw_feature_bc_matrix/",
+    NOR_IV = "raw_feature_bc_matrix/",
+    NOR_V = "raw_feature_bc_matrix/",
+      NOR_VI = "raw_feature_bc_matrix/",
+    NOR_VII = "raw_feature_bc_matrix/",
+      NOR_VIII = "raw_feature_bc_matrix/",
+    NOR_IX = "raw_feature_bc_matrix/",
+      NOR_X = "raw_feature_bc_matrix/")
 #########@@@@@@@
 # Load the necessary libraries
 library(SoupX)
