@@ -36,24 +36,11 @@ DimPlot(ALL.combined2, reduction = 'umap', label = TRUE,raster = FALSE,split.by 
 ```
 
 ```{r}
-library(ggplot2)
-
-library(Seurat)
-library(dplyr)
-library(Seurat)
-library(dplyr)
 
 # Load necessary libraries
-library(dplyr)
-library(ggplot2)
-library(tidyr)
-# Load necessary libraries
-library(dplyr)
 library(ggplot2)
 library(tidyr)
 library(dplyr)
-library(ggplot2)
-library(tidyr)
 
 # Join data layers for the assay "RNA"
 ALL.combined2 <- JoinLayers(ALL.combined2, assay = "RNA")
@@ -150,8 +137,6 @@ library(patchwork)
 # Load required libraries
 library(Seurat)
 library(ggplot2)
-library(Seurat)
-library(Seurat)
 library(dplyr)
 
 # Assuming ALL.combined2 is your Seurat object
@@ -186,11 +171,6 @@ print(dot_plot)
 ggsave("combined_dot_plot.png", plot = dot_plot, width = 10, height = 8)
 
 ```
-
-
-
-
-
 
 ```{r}
 View(ALL.combined2@meta.data)
@@ -235,11 +215,7 @@ DimPlot(ALL.combined2, reduction = 'umap', label = TRUE,raster = FALSE,split.by 
 DefaultAssay(ALL.combined2) <- "RNA"
 ALL.combined2 <- JoinLayers(ALL.combined2, assay = "RNA")
 
-
-
 ```
-
-
 ```{r}
 FeaturePlot(ALL.combined2, reduction = 'umap', 
             features = c('KRT17'),
@@ -260,9 +236,6 @@ library(dplyr)
 # Assuming ALL.combined2 is your Seurat object
 
 ```
-
-
-
 ```{r}
 # Assuming 'celltype' includes both condition and cluster information
 Idents(ALL.combined2) <- "norpdac_celltype"  # Adjust if necessary
@@ -650,33 +623,11 @@ print(cluster_counts_df)
 
 
 ```{r}
-# Load required libraries
-if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    install.packages("ggplot2")
-}
-library(ggplot2)
-
-library(Seurat)
-library(dplyr)
-library(Seurat)
-library(dplyr)
-
 # Load necessary libraries
-library(dplyr)
-library(ggplot2)
-library(tidyr)
-# Load necessary libraries
-library(dplyr)
 library(ggplot2)
 library(tidyr)
 library(dplyr)
-library(ggplot2)
-library(tidyr)
 
-# Function to create sample DEG data frames for a specific cluster
-# Load necessary libraries
-library(ggplot2)
-library(dplyr)
 
 # Create mock data for all 16 clusters (replace these with your actual top gene data frames)
 # Add the gene names as a new 
@@ -1181,10 +1132,3 @@ dotplot(ego, showCategory = 10)
 barplot(ego, showCategory = 10)
 barplot(ekegg,showCategory = 10)
 ```
-
-
-
-
-
-
-
