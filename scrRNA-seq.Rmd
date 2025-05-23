@@ -526,7 +526,6 @@ print(dim_plot_combined)
 ggsave(filename = "combined_dim_plot.png", plot = dim_plot_combined, width = 15, height = 5)
 
 ####################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-%%%%%%%%%%%%%%%
 # Loop through each Seurat object in 'processed_samples' list to create violin plots
 # Loop through all samples and create violin plots
 for (sample_name in names(processed_samples)) {
@@ -549,7 +548,6 @@ for (sample_name in names(processed_samples)) {
 
 saveRDS(processed_samples, file = "processed_samples.rds")
 processed_samples <- readRDS("processed_samples.rds")
-%%%%%%%%%%%%%%%%5
 #################################################################
 
 # Print the merged UMAP plot
@@ -1091,9 +1089,7 @@ go_results <- enrichGO(gene = key_genes_vector, OrgDb = org.Hs.eg.db,
 print(head(go_results))
 ########################################################################################
 ALL.combined2 <- readRDS("ALL_combined_seurat_object2.rds")
-
 # Analyse NOR and PDACseparately
-
 # Assuming your object is called ALL.combined
 ALL.list <- SplitObject(ALL.combined2, split.by = "orig.ident")
 NOR_ALL <- ALL.list[["NOR"]]
@@ -1115,7 +1111,6 @@ dim(ALL.combined2)
 dim(NOR_ALL)
 dim(PDAC_ALL)
 #########
-library(SingleR)
 library(SingleR)
 library(SingleCellExperiment)  # if you're using SingleCellExperiment objects
 library(celldex)
@@ -1165,11 +1160,10 @@ DimPlot(PDAC_ALL, reduction = 'umap',group.by = 'SingleRlabels',label = FALSE)
 DimPlot(ALL.combined2, reduction = "umap", label = TRUE)
 
 ###################################################
-```{r}
+
 #saveRDS(ALL.combined2, file = "ALL_combined_seurat_object.rds")
 ALL.combined2 <- readRDS("ALL_combined_seurat_object.rds")
 library(dplyr)
-library(Seurat)
 library(Seurat)
 library(patchwork)
 ElbowPlot(ALL.combined2)
@@ -1200,24 +1194,8 @@ ALL.combined2 <- readRDS("ALL_combined_seurat_object.rds")
 DimPlot(ALL.combined2, reduction = 'umap', label = TRUE,raster = FALSE)
 DimPlot(ALL.combined2, reduction = 'umap', label = TRUE,raster = FALSE,split.by = "orig.ident")
 
-```
-
-```{r}
-library(ggplot2)
-
-library(Seurat)
-library(dplyr)
-library(Seurat)
-library(dplyr)
-
 # Load necessary libraries
-library(dplyr)
-library(ggplot2)
-library(tidyr)
-# Load necessary libraries
-library(dplyr)
-library(ggplot2)
-library(tidyr)
+library(Seurat)
 library(dplyr)
 library(ggplot2)
 library(tidyr)
@@ -1240,7 +1218,6 @@ DotPlot(ALL.combined2, features = c("GALNTL6", "CLEC17A", "FCER2", "BANK1", "FCR
 cluster2 <- FindConservedMarkers(ALL.combined2, ident.1 = 2, only.pos = TRUE,grouping.var = "orig.ident", verbose = FALSE)
 VlnPlot(ALL.combined2, features = "CFTR", group.by = "celltypes",pt.size = 0)
 VlnPlot(ALL.combined2, features = "CYP2C18", group.by = "celltypes",pt.size = 0)
-
 
 DotPlot(ALL.combined2, features = c("CYP2C19", "WNT7B", "TM4SF5", "ENTPD8", "CYP2C18", "IYD"))
 # find marker for cluster 3
@@ -1310,14 +1287,9 @@ VlnPlot(ALL.combined2, features = "SCG5", group.by = "celltypes",pt.size = 0)
 
 DotPlot(ALL.combined2, features = c("CACNA1A", "SCG5", "CHGB", "KCNMB2", "TTR", "PCSK1N", "RIMS2", "HTR1F", "SCGN", "TMEM132D", "DPP6", "HS6ST3", "SNAP25", "PCSK2","ILDR2"))
 
-```
-
-```{r}
-library(patchwork)
 # Load required libraries
-library(Seurat)
+library(patchwork)
 library(ggplot2)
-library(Seurat)
 library(Seurat)
 library(dplyr)
 
@@ -1352,14 +1324,6 @@ print(dot_plot)
 # Save the DotPlot (optional)
 ggsave("combined_dot_plot.png", plot = dot_plot, width = 10, height = 8)
 
-```
-
-
-
-
-
-
-```{r}
 View(ALL.combined2@meta.data)
 Idents(ALL.combined2)
 ALL.combined2$celltypes<-Idents(ALL.combined2)
@@ -1370,10 +1334,6 @@ DimPlot(ALL.combined2, reduction = 'umap', label = TRUE, split.by = "orig.ident"
 
 DimPlot(ALL.combined2, reduction = 'umap', label = FALSE)
 #DimPlot(ALL.combined2, reduction = 'umap', label = TRUE, .by = "orig.ident")
-
-```
-
-```{r}
 
 ALL.combined2 <- RenameIdents(ALL.combined2,'0'= 'CD8T cell')
 ALL.combined2 <- RenameIdents(ALL.combined2,'1'= 'naive B cell')
@@ -1394,43 +1354,25 @@ ALL.combined2 <- RenameIdents(ALL.combined2,'15'= 'Endocrine cell')
 #DimPlot(ALL.combined2, reduction = 'umap', label = TRUE, raster = FALSE)
 DimPlot(ALL.combined2, reduction = 'umap', label = TRUE,raster = FALSE,split.by = "orig.ident")
 #cluater0_469.markers <- FindMarkers(ALL.combined2, ident.1 = 0,ident.2 = c(4,6,9),min.pct = 0.25)
-```
 
-
-```{r}
 # Set the default assay to RNA to ensure we analyze gene expression
 DefaultAssay(ALL.combined2) <- "RNA"
 ALL.combined2 <- JoinLayers(ALL.combined2, assay = "RNA")
 
-
-
-```
-
-
-```{r}
 FeaturePlot(ALL.combined2, reduction = 'umap', 
             features = c('KRT17'),
             split.by = 'orig.ident', min.cutoff = 'q10')
-```
 
-```{r}
 # to see the celltype variation by conditions 
 FeaturePlot(ALL.combined2, reduction = 'umap', 
             features = c('FGFBP2'),
             split.by = 'orig.ident', min.cutoff = 'q10')
-```
 
-```{r}
 library(Seurat)
 library(dplyr)
 
 # Assuming ALL.combined2 is your Seurat object
 
-```
-
-
-
-```{r}
 # Assuming 'celltype' includes both condition and cluster information
 Idents(ALL.combined2) <- "norpdac_celltype"  # Adjust if necessary
 
@@ -1514,8 +1456,7 @@ Idents(ALL.combined2) <- "norpdac_celltype"  # Adjust if necessary
 
 cluster15_deg <- FindMarkers(ALL.combined2,ident.1 = "PDAC_Endocrine cell", ident.2 = "NOR_Endocrine cell",only.pos = TRUE, verbose = FALSE)
 top20cluster15_genes <- head(cluster15_deg[order(cluster15_deg$avg_log2FC, decreasing = TRUE), ], 20)
-```
-```{r}
+
 # List of all DEG data frames
 cluster_DEGs <- list(cluster0_deg, cluster1_deg, cluster2_deg, cluster3_deg, cluster4_deg,
                      cluster5_deg, cluster6_deg, cluster7_deg, cluster8_deg, cluster9_deg,
@@ -1607,9 +1548,6 @@ Heatmap(
   )
 )
 
-```
-
-```{r}
 # List of all DEG data frames
 cluster_DEGs <- list(cluster0_deg, cluster1_deg, cluster2_deg, cluster3_deg, cluster4_deg,
                      cluster5_deg, cluster6_deg, cluster7_deg, cluster8_deg, cluster9_deg,
@@ -1686,8 +1624,6 @@ heatmap_plot <- Heatmap(
 
 # Draw the heatmap
 draw(heatmap_plot)
-
-
 # Load necessary libraries
 library(ComplexHeatmap)
 library(circlize)
@@ -1742,9 +1678,6 @@ heatmap_plot <- Heatmap(
 # Draw the heatmap
 draw(heatmap_plot)
 
-```
-
-```{r}
 ## cluster 0
 top20cluster0_genes$celltype <- "CD8T cell"
 View(top20cluster0_genes)
@@ -1794,10 +1727,6 @@ View(top20cluster14_genes)
 top20cluster15_genes$celltype <- "Endocrine cell"
 View(top20cluster15_genes)
 
-
-
-```
-
 ## cluster```{r}
 # Get the cluster identities of all cells
 cell_clusters <- Idents(ALL.combined2)
@@ -1815,35 +1744,16 @@ colnames(cluster_counts_df) <- c("Cluster", "Cell_Count")
 # View the data frame
 print(cluster_counts_df)
 
-
-```{r}
 # Load required libraries
 if (!requireNamespace("ggplot2", quietly = TRUE)) {
     install.packages("ggplot2")
 }
 library(ggplot2)
-
 library(Seurat)
-library(dplyr)
-library(Seurat)
-library(dplyr)
-
 # Load necessary libraries
-library(dplyr)
-library(ggplot2)
-library(tidyr)
-# Load necessary libraries
-library(dplyr)
-library(ggplot2)
 library(tidyr)
 library(dplyr)
-library(ggplot2)
-library(tidyr)
-
 # Function to create sample DEG data frames for a specific cluster
-# Load necessary libraries
-library(ggplot2)
-library(dplyr)
 
 # Create mock data for all 16 clusters (replace these with your actual top gene data frames)
 # Add the gene names as a new 
@@ -1937,7 +1847,6 @@ all_top_genes <- list(
   Cluster14 = top20cluster14_genes,
   Cluster15 = top20cluster15_genes
 )
-
 # Combine all data frames into one
 combined_top_genes <- bind_rows(all_top_genes, .id = "Cluster")
 #combined_top_genes2 <- bind_rows(all_top_genes)
@@ -1947,7 +1856,6 @@ rownames(combined_top_genes) <- NULL
 
 # View combined data (optional)
 print(combined_top_genes)
-
 # Order genes for consistent plotting
 combined_top_genes$gene <- factor(combined_top_genes$gene, 
                                    levels = unique(combined_top_genes$gene))
@@ -1983,8 +1891,6 @@ ggplot(combined_top_genes, aes(x = celltype, y = gene, fill = avg_log2FC)) +
   theme(axis.text.y = element_text(size = 5),
         axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
         legend.title = element_blank())
-
-
 ##############
 # Assuming combined_top_genes is your data frame and it contains 'gene', 'Cluster', and 'avg_log2FC'
 install.packages("scales")
@@ -2010,22 +1916,14 @@ ggplot(combined_top_genes, aes(x = celltype, y = gene, fill = scaled_avg_log2FC)
  
                legend.title = element_blank())
 #######################
-
 ######################################################################
 # Initialize a list to store DEGs for each cluster
 
-
-
-```
-
-
-```{r}
 # Load required libraries
 if (!requireNamespace("ggplot2", quietly = TRUE)) {
     install.packages("ggplot2")
 }
 library(ggplot2)
-
 library(Seurat)
 library(dplyr)
 # Extract the top 10 DEGs based on adjusted p-value and ploting Dotplot and Heatmap
@@ -2202,7 +2100,6 @@ DotPlot(ALL.combined2, features = top10_genes15, group.by = "orig.ident") +
   labs(title = "Dot Plot of Top 10 DEGs: PDAC vs NOR Endocrine  Cells") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for readability
 
-```
 The "prevalence of gene expression across cells in the specified group" refers to how commonly or frequently a particular gene is expressed among the cells in a given group (like `"PDAC"` or `"NOR"` in your dataset).
 
 In other words, **prevalence** indicates the **percentage of cells within each group** that have detectable expression of a particular gene.
@@ -2228,7 +2125,7 @@ And you’re looking at the gene `FOS`:
 - If `FOS` has a **large dot** in the `PDAC` group, it means that `FOS` is expressed in a large percentage of cells in the `PDAC` group.
 - If `FOS` has a **small dot** in the `NOR` group, it indicates that only a small percentage of cells in the `NOR` group express `FOS`.
 
-This shows that `FOS` is **more prevalent** in the `PDAC` group than in the `NOR` group, meaning that `FOS` is **expressed more widely** across the cancer cells than in the normal cells.
+#This shows that `FOS` is **more prevalent** in the `PDAC` group than in the `NOR` group, meaning that `FOS` is **expressed more widely** across the cancer cells than in the normal cells.
 
 ### Summary
 
@@ -2236,9 +2133,6 @@ This shows that `FOS` is **more prevalent** in the `PDAC` group than in the `NOR
 - It helps you understand whether a gene is commonly or rarely expressed within each cell group.
 - This information, combined with the **color** (which shows the **average expression level**), gives a full picture of how a gene behaves in different cell groups.
 #####################################################################################
-
-
-```{r}
 
 # Load clusterProfiler for enrichment analysis
 library(clusterProfiler)
@@ -2338,7 +2232,6 @@ dotplot(ego, showCategory = 10)
 ekegg <- enrichKEGG(gene = gene_ids$ENTREZID,
                     organism = 'hsa',  # For human
                     pvalueCutoff = 0.05)
-
 # View the KEGG enrichment results
 head(ekegg)
 
@@ -2347,4 +2240,3 @@ dotplot(ekegg, showCategory = 10)
 dotplot(ego, showCategory = 10) 
 barplot(ego, showCategory = 10)
 barplot(ekegg,showCategory = 10)
-```
