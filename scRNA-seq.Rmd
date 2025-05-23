@@ -1748,9 +1748,9 @@ print(cluster_counts_df)
 if (!requireNamespace("ggplot2", quietly = TRUE)) {
     install.packages("ggplot2")
 }
+# Load necessary libraries
 library(ggplot2)
 library(Seurat)
-# Load necessary libraries
 library(tidyr)
 library(dplyr)
 # Function to create sample DEG data frames for a specific cluster
@@ -1874,7 +1874,6 @@ library(dplyr)
 ############3
 library(dplyr)
 library(Seurat)
-
 library(ggplot2)
 
 # Assuming `combined_top_genes` is a data frame with columns:
@@ -2137,12 +2136,8 @@ And you’re looking at the gene `FOS`:
 # Load clusterProfiler for enrichment analysis
 library(clusterProfiler)
 library(org.Hs.eg.db) # Human database for gene enrichment
-library(clusterProfiler)
-library(org.Hs.eg.db)  # For human gene annotation
 library(dplyr)
-#install.packages("tidyr")
 library(Seurat)
-library(dplyr)
 Idents(ALL.combined2) <- "orig.ident"  # Make sure to set the appropriate metadata column for identities
 
 # Perform differential expression analysis
