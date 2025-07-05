@@ -3,4 +3,11 @@ This  is a small work on the Single-cell RNA sequencing (scRNA-seq).In this proj
 
 
 ![scrma_seq drawio](https://github.com/user-attachments/assets/6a878c54-945e-485b-a75d-76fec677c474)
+
 This figure shows the methodology used in this analysis.
+
+## Tools
+
+## Requirements
+
+
