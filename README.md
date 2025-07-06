@@ -6,8 +6,6 @@ This  is a small work on the Single-cell RNA sequencing (scRNA-seq).In this proj
 
 This figure shows the methodology used in this analysis.
 
-## Tools
-RStudio and Rtools
 ## Requirements
 
 ## Data
