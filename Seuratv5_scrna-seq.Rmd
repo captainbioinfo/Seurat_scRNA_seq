@@ -1,0 +1,796 @@
+
+```{r}
+library(Seurat)
+library(SoupX)
+library(tidyverse)
+library(scDblFinder)
+library(scater)
+library(BiocParallel)
+library(SingleCellExperiment)
+library(Seurat)
+library(SoupX)
+library(ggplot2)
+library(DiagrammeR)
+```
+
+
+
+```{r}
+PDAC_I<-Read10X(data.dir = "pdac_filtered/SRR21491966_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+PDAC_II<-Read10X(data.dir = "pdac_filtered/SRR21491967_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+PDAC_III<-Read10X(data.dir = "pdac_filtered/SRR21491972_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+PDAC_IV<-Read10X(data.dir = "pdac_filtered/SRR21491975_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+PDAC_V<-Read10X(data.dir = "pdac_filtered/SRR21491979_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+PDAC_VI<-Read10X(data.dir = "pdac_filtered/SRR21491982_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+PDAC_VII<-Read10X(data.dir = "pdac_filtered/SRR21491983_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+PDAC_VIII<-Read10X(data.dir = "pdac_filtered/SRR21491984_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+PDAC_IX<-Read10X(data.dir = "pdac_filtered/SRR21491986_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+PDAC_X<-Read10X(data.dir = "pdac_filtered/SRR21491987_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+### NORMAL 
+NOR_I<-Read10X(data.dir = "adac_filtered/SRR21491988_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+NOR_II<-Read10X(data.dir = "adac_filtered/SRR21492001_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+NOR_III<-Read10X(data.dir = "adac_filtered/SRR21492003_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+NOR_IV<-Read10X(data.dir = "adac_filtered/SRR21492004_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+NOR_V<-Read10X(data.dir = "adac_filtered/SRR21492005_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+NOR_VI<-Read10X(data.dir = "adac_filtered/SRR21492006_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+NOR_VII<-Read10X(data.dir = "adac_filtered/SRR21492007_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+NOR_VIII<-Read10X(data.dir = "adac_filtered/SRR21492008_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+NOR_IX<-Read10X(data.dir = "adac_filtered/SRR21492014_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+NOR_X<-Read10X(data.dir = "adac_filtered/SRR21492015_filtered_feature_bc_matrix/filtered_feature_bc_matrix")
+```
+
+
+```{r}
+PDAC_I<-CreateSeuratObject(counts = PDAC_I,project = "PDAC", min.cells = 3, min.features = 200)
+PDAC_I
+PDAC_II<-CreateSeuratObject(counts = PDAC_II,project = "PDAC", min.cells = 3, min.features = 200)
+PDAC_II
+PDAC_III<-CreateSeuratObject(counts = PDAC_III,project = "PDAC", min.cells = 3, min.features = 200)
+PDAC_III
+PDAC_IV<-CreateSeuratObject(counts = PDAC_IV,project = "PDAC", min.cells = 3, min.features = 200)
+PDAC_IV
+PDAC_V<-CreateSeuratObject(counts = PDAC_V,project = "PDAC", min.cells = 3, min.features = 200)
+PDAC_V
+PDAC_VI<-CreateSeuratObject(counts = PDAC_VI,project = "PDAC", min.cells = 3, min.features = 200)
+PDAC_VI
+PDAC_VII<-CreateSeuratObject(counts = PDAC_VII,project = "PDAC", min.cells = 3, min.features = 200)
+PDAC_VII
+PDAC_VIII<-CreateSeuratObject(counts = PDAC_VIII,project = "PDAC", min.cells = 3, min.features = 200)
+PDAC_VIII
+PDAC_IX<-CreateSeuratObject(counts = PDAC_IX,project = "PDAC", min.cells = 3, min.features = 200)
+PDAC_IX
+PDAC_X<-CreateSeuratObject(counts = PDAC_X,project = "PDAC", min.cells = 3, min.features = 200)
+PDAC_X
+
+### NORMAL
+# CREATE SEURAT OBJECT NORMAL
+
+NOR_I<-CreateSeuratObject(counts = NOR_I,project = "NOR", min.cells = 3, min.features = 200)
+NOR_I
+NOR_II<-CreateSeuratObject(counts = NOR_II,project = "NOR", min.cells = 3, min.features = 200)
+NOR_II
+NOR_III<-CreateSeuratObject(counts = NOR_III,project = "NOR", min.cells = 3, min.features = 200)
+NOR_III
+NOR_IV<-CreateSeuratObject(counts = NOR_IV,project = "NOR", min.cells = 3, min.features = 200)
+NOR_IV
+NOR_V<-CreateSeuratObject(counts = NOR_V,project = "NOR", min.cells = 3, min.features = 200)
+NOR_V
+NOR_VI<-CreateSeuratObject(counts = NOR_VI,project = "NOR", min.cells = 3, min.features = 200)
+NOR_VI
+NOR_VII<-CreateSeuratObject(counts = NOR_VII,project = "NOR", min.cells = 3, min.features = 200)
+NOR_VII
+NOR_VIII<-CreateSeuratObject(counts = NOR_VIII,project = "NOR", min.cells = 3, min.features = 200)
+NOR_VIII
+NOR_IX<-CreateSeuratObject(counts = NOR_IX,project = "NOR", min.cells = 3, min.features = 200)
+NOR_IX
+NOR_X<-CreateSeuratObject(counts = NOR_X,project = "NOR", min.cells = 3, min.features = 200)
+NOR_X
+```
+
+
+
+```{r}
+## SAVE RDS
+
+saveRDS(PDAC_I,file = "PDAC_I.RDS")
+saveRDS(PDAC_II,file = "PDAC_II.RDS")
+saveRDS(PDAC_III,file = "PDAC_III.RDS")
+saveRDS(PDAC_IV,file = "PDAC_IV.RDS")
+saveRDS(PDAC_V,file = "PDAC_V.RDS")
+saveRDS(PDAC_VI,file = "PDAC_VI.RDS")
+saveRDS(PDAC_VII,file = "PDAC_VII.RDS")
+saveRDS(PDAC_VIII,file = "PDAC_VIII.RDS")
+saveRDS(PDAC_IX,file = "PDAC_IX.RDS")
+saveRDS(PDAC_X,file = "PDAC_X.RDS")
+##### NORMAL
+saveRDS(NOR_I,file ="NOR_I.RDS")
+saveRDS(NOR_II,file ="NOR_II.RDS")
+saveRDS(NOR_III,file ="NOR_III.RDS")
+saveRDS(NOR_IV,file ="NOR_IV.RDS")
+saveRDS(NOR_V,file ="NOR_V.RDS")
+saveRDS(NOR_VI,file ="NOR_VI.RDS")
+saveRDS(NOR_VII,file ="NOR_VII.RDS")
+saveRDS(NOR_VIII,file ="NOR_VIII.RDS")
+saveRDS(NOR_IX,file ="NOR_IX.RDS")
+saveRDS(NOR_X,file ="NOR_X.RDS")
+```
+
+
+
+```{r}
+# QUALITY CONTROL
+
+# calculate mitochondrial gene %
+# FOR DISEASED CONDITION SAMPLES
+PDAC_I<- PercentageFeatureSet(PDAC_I, pattern = "^MT-",col.name = "percent.mt")
+PDAC_II<- PercentageFeatureSet(PDAC_II, pattern = "^MT-",col.name = "percent.mt")
+PDAC_III<- PercentageFeatureSet(PDAC_III, pattern = "^MT-",col.name = "percent.mt")
+PDAC_IV<- PercentageFeatureSet(PDAC_IV, pattern = "^MT-",col.name = "percent.mt")
+PDAC_V<- PercentageFeatureSet(PDAC_V, pattern = "^MT-",col.name = "percent.mt")
+PDAC_VI<- PercentageFeatureSet(PDAC_VI, pattern = "^MT-",col.name = "percent.mt")
+PDAC_VII<- PercentageFeatureSet(PDAC_VII, pattern = "^MT-",col.name = "percent.mt")
+PDAC_VIII<- PercentageFeatureSet(PDAC_VIII, pattern = "^MT-",col.name = "percent.mt")
+PDAC_IX<- PercentageFeatureSet(PDAC_IX, pattern = "^MT-",col.name = "percent.mt")
+PDAC_X<- PercentageFeatureSet(PDAC_X, pattern = "^MT-",col.name = "percent.mt")
+# FOR NORMAL CONDITION SAMPLES
+NOR_I<- PercentageFeatureSet(NOR_I, pattern = "^MT-",col.name = "percent.mt")
+NOR_II<- PercentageFeatureSet(NOR_II, pattern = "^MT-",col.name = "percent.mt")
+NOR_III<- PercentageFeatureSet(NOR_III, pattern = "^MT-",col.name = "percent.mt")
+NOR_IV<- PercentageFeatureSet(NOR_IV, pattern = "^MT-",col.name = "percent.mt")
+NOR_V<- PercentageFeatureSet(NOR_V, pattern = "^MT-",col.name = "percent.mt")
+NOR_VI<- PercentageFeatureSet(NOR_VI, pattern = "^MT-",col.name = "percent.mt")
+NOR_VII<- PercentageFeatureSet(NOR_VII, pattern = "^MT-",col.name = "percent.mt")
+NOR_VIII<- PercentageFeatureSet(NOR_VIII, pattern = "^MT-",col.name = "percent.mt")
+NOR_IX<- PercentageFeatureSet(NOR_IX, pattern = "^MT-",col.name = "percent.mt")
+NOR_X<- PercentageFeatureSet(NOR_X, pattern = "^MT-",col.name = "percent.mt")
+```
+
+
+
+
+```{r}
+# 1 PDAC_I
+PDAC_I
+#VlnPlot(PDAC_I, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_I, assay = "RNA", layer = "counts")
+PDAC_I <- subset(PDAC_I, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+gene_counts <- GetAssayData(PDAC_I, assay = "RNA", layer = "counts")
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+FeatureScatter(PDAC_I, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") + geom_smooth(method = 'lm')
+
+# Subset the Seurat object to keep only the filtered genes
+PDAC_I <- PDAC_I[filter_genes, ]
+
+# Check the final dimensions
+cat("Final object dimensions: ", dim(PDAC_I), "\n")
+PDAC_I
+
+VlnPlot(PDAC_I, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 
+# 2
+PDAC_II
+VlnPlot(PDAC_II, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_II, assay = "RNA", layer = "counts")
+PDAC_II <- subset(PDAC_II, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+gene_counts <- GetAssayData(PDAC_II, assay = "RNA", layer = "counts")
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+FeatureScatter(PDAC_II, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") + geom_smooth(method = 'lm')
+
+# Subset the Seurat object to keep only the filtered genes
+PDAC_II <- PDAC_II[filter_genes, ]
+
+# Check the final dimensions
+VlnPlot(PDAC_II, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+PDAC_II
+#3
+PDAC_III
+VlnPlot(PDAC_III, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_III, assay = "RNA", layer = "counts")
+PDAC_III
+VlnPlot(PDAC_III, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_III, assay = "RNA", layer = "counts")
+PDAC_III <- subset(PDAC_III, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+gene_counts <- GetAssayData(PDAC_III, assay = "RNA", layer = "counts")
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+PDAC_III <- PDAC_III[filter_genes, ]
+
+# Check the final dimension
+PDAC_III
+VlnPlot(PDAC_III, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3)
+# 4
+PDAC_IV
+VlnPlot(PDAC_IV, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_IV, assay = "RNA", layer = "counts")
+VlnPlot(PDAC_IV, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_IV, assay = "RNA", layer = "counts")
+PDAC_IV <- subset(PDAC_IV, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+gene_counts <- GetAssayData(PDAC_IV, assay = "RNA", layer = "counts")
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+PDAC_IV <- PDAC_IV[filter_genes, ]                     
+PDAC_IV
+VlnPlot(PDAC_IV, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 5
+PDAC_V
+VlnPlot(PDAC_V, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_V, assay = "RNA", layer = "counts")
+PDAC_V <- subset(PDAC_V, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+gene_counts <- GetAssayData(PDAC_V, assay = "RNA", layer = "counts")
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+PDAC_V <- PDAC_V[filter_genes, ]                                       
+PDAC_V
+VlnPlot(PDAC_V, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 6
+PDAC_VI
+VlnPlot(PDAC_VI, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_VI, assay = "RNA", layer = "counts")
+PDAC_VI <- subset(PDAC_VI, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+PDAC_VI <- PDAC_VI[filter_genes, ]                       
+PDAC_VI
+VlnPlot(PDAC_VI, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 7
+PDAC_VII
+VlnPlot(PDAC_VII, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_VII, assay = "RNA", layer = "counts")
+PDAC_VII <- subset(PDAC_VII, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+PDAC_VII <- PDAC_VII[filter_genes, ]                      
+PDAC_VII
+VlnPlot(PDAC_VII, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+
+# 8
+PDAC_VIII
+VlnPlot(PDAC_VIII, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_VIII, assay = "RNA", layer = "counts")
+gene_counts <- GetAssayData(PDAC_VIII, assay = "RNA", layer = "counts")
+PDAC_VIII <- subset(PDAC_VIII, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+PDAC_VIII <- PDAC_VIII[filter_genes, ]                      
+PDAC_VIII
+VlnPlot(PDAC_VIII, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+
+# 9
+PDAC_IX
+VlnPlot(PDAC_IX, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_IX, assay = "RNA", layer = "counts")
+PDAC_IX <- subset(PDAC_IX, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+FeatureScatter(PDAC_IX, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") + geom_smooth(method = 'lm')
+
+# Subset the Seurat object to keep only the filtered genes
+PDAC_IX <- PDAC_IX[filter_genes, ]                      
+PDAC_IX
+VlnPlot(PDAC_IX, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+
+# 10
+PDAC_X
+VlnPlot(PDAC_X, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(PDAC_X, assay = "RNA", layer = "counts")
+
+PDAC_X <- subset(PDAC_X, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+FeatureScatter(PDAC_X, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") + geom_smooth(method = 'lm')
+
+# Subset the Seurat object to keep only the filtered genes
+PDAC_X <- PDAC_X[filter_genes, ]                                         
+PDAC_X
+VlnPlot(PDAC_X, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+
+############normal
+# 1
+NOR_I
+VlnPlot(NOR_I, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+
+gene_counts <- GetAssayData(NOR_I, assay = "RNA", layer = "counts")
+NOR_I <- subset(NOR_I, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+NOR_I <- NOR_I[filter_genes, ]                                           
+NOR_I
+VlnPlot(NOR_I, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 2
+NOR_II
+VlnPlot(NOR_II, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(NOR_II, assay = "RNA", layer = "counts")
+NOR_II <- subset(NOR_II, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+NOR_II <- NOR_II[filter_genes, ]                                     
+NOR_II
+VlnPlot(NOR_II, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 3
+NOR_III
+VlnPlot(NOR_III, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(NOR_III, assay = "RNA", layer = "counts")
+NOR_III <- subset(NOR_III, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+NOR_III <- NOR_III[filter_genes, ]                                   
+NOR_III
+VlnPlot(NOR_III, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 4
+NOR_IV
+VlnPlot(NOR_IV, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(NOR_IV, assay = "RNA", layer = "counts")
+NOR_IV <- subset(NOR_IV, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+NOR_IV_ <- NOR_IV[filter_genes, ]                                   
+NOR_IV
+VlnPlot(NOR_IV, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 5
+NOR_V
+VlnPlot(NOR_V, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(NOR_V, assay = "RNA", layer = "counts")
+NOR_V <- subset(NOR_V, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+NOR_V <- NOR_V[filter_genes, ]                                      
+NOR_V
+VlnPlot(NOR_V, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 6
+NOR_VI
+VlnPlot(NOR_VI, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(NOR_VI, assay = "RNA", layer = "counts")
+NOR_VI <- subset(NOR_VI, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+NOR_VI <- NOR_VI[filter_genes, ]                                      
+NOR_VI
+VlnPlot(NOR_VI, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+
+# 7
+NOR_VII
+VlnPlot(NOR_VII, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(NOR_VII, assay = "RNA", layer = "counts")
+NOR_VII <- subset(NOR_VII, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+NOR_VII <- NOR_VII[filter_genes, ]                                
+NOR_VII
+VlnPlot(NOR_VII, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 8
+NOR_VIII
+VlnPlot(NOR_VIII, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(NOR_VIII, assay = "RNA", layer = "counts")
+NOR_VIII <- subset(NOR_VIII, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+NOR_VIII <- NOR_VIII[filter_genes, ]                             
+NOR_VIII
+VlnPlot(NOR_VIII, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 9
+NOR_IX
+VlnPlot(NOR_IX, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(NOR_IX, assay = "RNA", layer = "counts")
+NOR_IX <- subset(NOR_IX, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+NOR_IX <- NOR_IX[filter_genes, ]                              
+NOR_IX
+VlnPlot(NOR_IX, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 10
+NOR_X
+VlnPlot(NOR_X, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+gene_counts <- GetAssayData(NOR_X, assay = "RNA", layer = "counts")
+NOR_X <- subset(NOR_X, subset = nFeature_RNA < 5000 & nCount_RNA < 10000 & percent.mt < 25)              # Gene filtering: Keep genes expressed in at least 10 cells
+gene_counts <- GetAssayData(NOR_X, assay = "RNA", layer = "counts")
+filter_genes <- rowSums(gene_counts > 0) >= 10  # Keep genes expressed in >= 10 cells
+
+# Subset the Seurat object to keep only the filtered genes
+NOR_X <- NOR_X[filter_genes, ]
+
+# Check the final dimensions
+cat("Final object dimensions: ", dim(NOR_X), "\n")
+NOR_X
+VlnPlot(NOR_X, features = c("percent.mt","nCount_RNA","nFeature_RNA"),ncol = 3, layer = "counts")
+# 
+
+```
+
+
+```{r}
+ALL.list <- list(
+  PDAC_I = PDAC_I,
+  PDAC_II = PDAC_II,
+  PDAC_III = PDAC_III,
+  PDAC_IV = PDAC_IV,
+  PDAC_V = PDAC_V,
+  PDAC_VI = PDAC_VI,
+  PDAC_VII = PDAC_VII,
+  PDAC_VIII = PDAC_VIII,
+  PDAC_IX = PDAC_IX,
+  PDAC_X = PDAC_X,
+  NOR_I = NOR_I,
+  NOR_II = NOR_II,
+  NOR_III = NOR_III,
+  NOR_IV = NOR_IV,
+  NOR_V = NOR_V,
+  NOR_VI = NOR_VI,
+  NOR_VII = NOR_VII,
+  NOR_VIII = NOR_VIII,
+  NOR_IX = NOR_IX,
+  NOR_X = NOR_X
+)
+```
+
+
+
+```{r}
+# Remove the individual objects, keeping only ALL.list
+rm(list = c(
+  "PDAC_I", "PDAC_II", "PDAC_III", "PDAC_IV", "PDAC_V",
+  "PDAC_VI", "PDAC_VII", "PDAC_VIII", "PDAC_IX", "PDAC_X",
+  "NOR_I", "NOR_II", "NOR_III", "NOR_IV", "NOR_V",
+  "NOR_VI", "NOR_VII", "NOR_VIII", "NOR_IX", "NOR_X"
+))
+```
+
+
+
+```{r}
+# Required libraries
+library(Seurat)
+library(SingleCellExperiment)
+library(scDblFinder)
+library(ggplot2)
+library(patchwork)
+
+# Create output folders
+dir.create("Filtered_RDS", showWarnings = FALSE)
+dir.create("QC_plots", showWarnings = FALSE)
+
+# Assume ALL.list contains SoupX-cleaned Seurat objects
+ALL.cleaned <- list()
+
+for (sample_name in names(ALL.list)) {
+  message("DoubletFinder: Processing ", sample_name)
+  
+  tryCatch({
+    seu <- ALL.list[[sample_name]]
+    if (is.null(seu) || ncol(seu) < 100) {
+      warning("Skipping ", sample_name)
+      next
+    }
+
+    message("  Converting to SCE...")
+    if (inherits(seu@assays$RNA, "Assay5") &&
+        !"counts" %in% names(seu@assays$RNA@layers)) {
+      seu@assays$RNA@layers$counts <- LayerData(seu, assay = "RNA", layer = "counts")
+    }
+
+    sce <- as.SingleCellExperiment(seu, assay = "RNA")
+
+    message("  Running scDblFinder...")
+    sce <- scDblFinder(sce, verbose = FALSE)
+
+    seu$scDblFinder.class <- sce$scDblFinder.class
+    seu$scDblFinder.score <- sce$scDblFinder.score
+    seu$doublet_processed <- Sys.time()
+
+    n_doublets <- sum(sce$scDblFinder.class == "doublet", na.rm = TRUE)
+    n_singlets <- sum(sce$scDblFinder.class == "singlet", na.rm = TRUE)
+    doublet_rate <- round(n_doublets / (n_doublets + n_singlets) * 100, 2)
+    seu$doublet_rate <- doublet_rate
+
+    message("  Doublets: ", n_doublets, " (", doublet_rate, "%)")
+
+    # Save QC plots
+    png(filename = paste0("QC_plots/", sample_name, "_doublet_QC.png"), width = 1600, height = 1200)
+    tryCatch({
+      p1 <- VlnPlot(seu, features = c("nFeature_RNA", "nCount_RNA"), pt.size = 0.1, ncol = 2)
+      p2 <- FeaturePlot(seu, features = "scDblFinder.score")
+      p3 <- DimPlot(seu, reduction = "umap", group.by = "scDblFinder.class", label = TRUE)
+      print(p1 | p2 / p3)
+    }, error = function(e) {
+      message("  Warning: Plotting failed - ", e$message)
+    })
+    dev.off()
+    message("  Saved PNG QC plot for ", sample_name)
+
+    # Keep only doublets
+    seu_doublets <- subset(seu, subset = scDblFinder.class == "doublet")
+    seu_doublets$doublet_filtered <- TRUE
+    seu_doublets$cells_before_doublet_filter <- ncol(seu)
+    seu_doublets$cells_after_doublet_filter <- ncol(seu_doublets)
+
+    ALL.cleaned[[sample_name]] <- seu_doublets
+
+  }, error = function(e) {
+    message("ERROR: ", e$message)
+    seu$scDblFinder.class <- "processing_failed"
+    seu$doublet_filtered <- FALSE
+    ALL.cleaned[[sample_name]] <- seu
+  })
+}
+
+```
+
+
+```{r}
+
+```
+
+
+
+```{r}
+# Update ALL.list to use doublet-filtered data
+ALL.list <- ALL.cleaned
+
+# Run downstream normalization and dimensionality reduction
+ALL.list <- lapply(ALL.list, function(sample) {
+  sample %>%
+    SCTransform(verbose = FALSE) %>%
+    RunPCA(verbose = FALSE) %>%
+    FindNeighbors(dims = 1:30) %>%
+    FindClusters() %>%
+    RunUMAP(dims = 1:30)
+})
+
+```
+
+
+```{r}
+# Create a directory to save UMAP plots
+dir.create("UMAP_plots", showWarnings = FALSE)
+
+# Loop through all samples and save UMAP plots
+for (sample_name in names(ALL.list)) {
+  seurat_obj <- ALL.list[[sample_name]]
+
+  # Create labeled UMAP plot
+  umap_plot <- DimPlot(seurat_obj, reduction = "umap", label = TRUE) +
+    ggtitle(paste("UMAP of", sample_name))
+
+  # Save the plot
+  ggsave(filename = paste0("UMAP_plots/", sample_name, "_UMAP.png"),
+         plot = umap_plot, width = 8, height = 6, dpi = 300)
+
+  message("Saved UMAP plot for ", sample_name)
+}
+
+# Optional: View structure
+str(ALL.list)
+
+# Loop through each object and print metadata preview
+for (sample_name in names(ALL.list)) {
+  seurat_obj <- ALL.list[[sample_name]]
+
+  cat("Metadata for", sample_name, ":\n")
+  print(head(seurat_obj@meta.data, 10))  # Print first 10 rows of metadata
+  cat("\n\n")
+}
+
+```
+
+
+```{r}
+# Load required libraries
+library(Seurat)
+library(dplyr)
+
+# === Load SoupX-corrected Seurat list ===
+ALL.list <- readRDS("ALL_data_processed_main.RDS")  # Already filtered + SoupX corrected
+
+# Save the processed list for backup
+saveRDS(ALL.list, file = "ALL_data_processed_main.RDS")
+
+# === Load previously processed sample list (if needed) ===
+# processed_samples <- readRDS("processed_samples.rds")
+
+# === Integration Preparation ===
+message("Preparing for integration...")
+
+# 1. Select features for integration
+features <- SelectIntegrationFeatures(object.list = ALL.list)
+
+# 2. Find integration anchors
+anchors <- FindIntegrationAnchors(object.list = ALL.list, anchor.features = features)
+
+# 3. Ensure correct assay set for integration
+ALL.list <- lapply(ALL.list, function(obj) {
+  DefaultAssay(obj) <- "RNA"
+  return(obj)
+})
+
+# 4. Perform integration
+ALL.combined <- IntegrateData(anchorset = anchors)
+
+# === Standard Workflow After Integration ===
+message("Running standard workflow on integrated object...")
+
+# 1. Variable feature selection
+ALL.combined <- FindVariableFeatures(ALL.combined, nfeatures = 2000)
+
+# 2. Scale the data
+ALL.combined <- ScaleData(ALL.combined, verbose = TRUE)
+
+# 3. Run PCA
+ALL.combined <- RunPCA(ALL.combined, npcs = 50, verbose = TRUE)
+
+# 4. Elbow plot to determine significant PCs
+ElbowPlot(ALL.combined)
+
+# 5. Run UMAP using top 30 PCs
+ALL.combined <- RunUMAP(ALL.combined, reduction = "pca", dims = 1:30)
+
+# 6. Find neighbors
+ALL.combined <- FindNeighbors(ALL.combined, reduction = "pca", dims = 1:30)
+
+# 7. Cluster the cells
+ALL.combined <- FindClusters(ALL.combined, resolution = 0.1)  # Tune resolution as needed
+
+# === Visualization ===
+message("Generating plots...")
+
+# Metadata view
+View(ALL.combined@meta.data)
+
+# UMAP plots
+DimPlot(ALL.combined, reduction = "umap", label = TRUE, raster = FALSE)
+DimPlot(ALL.combined, reduction = "umap", split.by = "orig.ident", label = TRUE, raster = FALSE)
+DimPlot(ALL.combined, reduction = "umap", group.by = "orig.ident", raster = FALSE)
+
+# QC violin plots
+VlnPlot(ALL.combined, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+
+# === Save Final Seurat Object ===
+saveRDS(ALL.combined, file = "ALL_combined_seurat_object.rds")
+message("Saved integrated and clustered object: ALL_combined_seurat_object.rds")
+
+```
+
+
+```{r}
+#install.packages("metap")
+BiocManager::install('multtest')
+```
+
+
+
+
+
+```{r}
+DimPlot(ALL.combined, reduction = "umap", split.by = "orig.ident", label = TRUE, raster = FALSE)
+DimPlot(
+  object = ALL.combined,
+  reduction = "umap",
+  split.by = "orig.ident",
+  label = TRUE,
+  label.size = 5,
+  pt.size = 1.2,
+  raster = FALSE
+) + 
+  theme_minimal(base_size = 14) +          # cleaner base theme
+  theme(
+    strip.text = element_text(size = 14),  # facet titles
+    axis.text = element_blank(),           # remove axis text
+    axis.ticks = element_blank(),          
+    panel.grid = element_blank()
+  )
+
+```
+
+
+
+
+```{r}
+# Analyse NOR and PDACseparately
+# Assuming your object is called ALL.combined
+ALL.list <- SplitObject(ALL.combined2, split.by = "orig.ident")
+NOR_ALL <- ALL.list[["NOR"]]
+PDAC_ALL <-ALL.list[["PDAC"]]
+View(ALL.combined@meta.data)
+View(NOR_ALL@meta.data)
+
+DimPlot(ALL.combined2, reduction = "umap", label = TRUE)
+DimPlot(PDAC_ALL,reduction = "umap",label = TRUE)
+DimPlot(NOR_ALL,reduction = "umap",label = TRUE)
+
+pdac_counts <- GetAssayData(PDAC_ALL, layer = "data")
+nor_counts <- GetAssayData(NOR_ALL, layer = "data")
+dim(ALL.combined2)
+ALL.combined2
+NOR_ALL
+PDAC_ALL
+dim(ALL.combined2)
+dim(NOR_ALL)
+dim(PDAC_ALL)
+```
+
+
+
+```{r}
+head(ALL.list)
+head(NOR_ALL)
+head(PDAC_ALL)
+
+```
+
+
+
+
+```{r}
+# Load libraries
+library(SingleR)
+library(SingleCellExperiment)
+library(celldex)
+library(Seurat)
+library(ggplot2)
+
+# Load reference dataset
+ref <- celldex::HumanPrimaryCellAtlasData()
+
+# Prepare function to annotate any Seurat object with SingleR
+run_singleR_annotation <- function(seurat_obj, ref, label_col = "label.main") {
+  # Convert to SCE
+  sce <- as.SingleCellExperiment(seurat_obj)
+  
+  # Add logcounts if missing
+  assay(sce, "logcounts") <- log1p(assay(sce, "counts"))
+  
+  # Run SingleR
+  pred <- SingleR(test = sce, ref = ref, labels = ref[[label_col]], assay.type.test = "logcounts")
+  
+  # Map SingleR labels back to Seurat object
+  seurat_obj$SingleRlabels <- pred$labels[match(rownames(seurat_obj@meta.data), rownames(pred))]
+  
+  return(list(seurat = seurat_obj, prediction = pred))
+}
+
+# Annotate each dataset
+result_nor   <- run_singleR_annotation(ALL.list$NOR, ref)
+result_pdac  <- run_singleR_annotation(ALL.list$PDAC, ref)
+result_comb  <- run_singleR_annotation(ALL.combined2, ref)
+
+# Update the objects
+ALL.list$NOR         <- result_nor$seurat
+ALL.list$PDAC        <- result_pdac$seurat
+ALL.combined2        <- result_comb$seurat
+
+# Plot UMAPs colored by SingleR label
+p1 <- DimPlot(ALL.list$NOR, reduction = "umap", group.by = "SingleRlabels", label = TRUE, repel = TRUE) + ggtitle("NOR - SingleR")
+p2 <- DimPlot(ALL.list$PDAC, reduction = "umap", group.by = "SingleRlabels", label = TRUE, repel = TRUE) + ggtitle("PDAC - SingleR")
+p3 <- DimPlot(ALL.combined2, reduction = "umap", group.by = "SingleRlabels", label = TRUE, repel = TRUE) + ggtitle("Combined - SingleR")
+
+# Print plots
+print(p1)
+print(p2)
+print(p3)
+
+# (Optional) Save predictions
+saveRDS(result_nor$prediction, "SingleR_NOR.rds")
+saveRDS(result_pdac$prediction, "SingleR_PDAC.rds")
+saveRDS(result_comb$prediction, "SingleR_Combined.rds")
+
+```
+
+```{r}
+#BiocManager::install("clusterProfiler")
+BiocManager::install("org.Hs.eg.db")
+
+```
+
+
+
+
